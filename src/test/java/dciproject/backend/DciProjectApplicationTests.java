@@ -1,0 +1,13 @@
+package dciproject.backend;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class DciProjectApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
