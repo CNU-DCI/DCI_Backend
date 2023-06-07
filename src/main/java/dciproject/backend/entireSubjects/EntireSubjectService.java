@@ -46,16 +46,19 @@ public class EntireSubjectService {
                     subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
                     TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
                     OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
+                    PROF_INFO("undefined").TMTBL_INFO("undefined").
                     CPTN_DIV_NM("일반선택").build();
             case 2021-> EntireSubject_2021.builder().
                     subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
                     TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
                     OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
+                    PROF_INFO("undefined").TMTBL_INFO("undefined").
                     CPTN_DIV_NM("일반선택").build();
             case 2020-> EntireSubject_2020.builder().
                     subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
                     TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
                     OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
+                    PROF_INFO("undefined").TMTBL_INFO("undefined").
                     CPTN_DIV_NM("일반선택").build();
             default -> null;
         };

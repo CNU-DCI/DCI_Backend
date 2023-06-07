@@ -16,4 +16,6 @@ public interface EntireSubject {
     String getOPEN_DCLSS(); // 분반 번호
     String getOPEN_SBJT_NM(); // 과목명
     String getCPTN_DIV_NM(); // 이수구분
+    String getPROF_INFO();
+    String getTMTBL_INFO();
 }

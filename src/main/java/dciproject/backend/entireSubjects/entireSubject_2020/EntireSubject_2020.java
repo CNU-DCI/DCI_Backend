@@ -50,4 +50,11 @@ public class EntireSubject_2020 implements EntireSubject {
 
     @Column
     private String CPTN_DIV_NM; // 이수구분
+
+
+    @Column
+    private String PROF_INFO; // 교수명
+
+    @Column
+    private String TMTBL_INFO; // 시간표
 }

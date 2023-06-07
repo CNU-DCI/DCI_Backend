@@ -153,9 +153,11 @@ public class DataRequestService {
             int pageNum = 1;
             int MAX_PAGE = 1;
             for (; pageNum <= MAX_PAGE; pageNum++) {
-                String requestBody = new StringBuilder().append("row=300&P_YR=")
+                String requestBody = new StringBuilder()
+                        .append("row=300")
+                        .append("&P_YR=")
                         .append(year)
-                        .append("&P_OPEN_SHTM_CD=+")
+                        .append("&P_OPEN_SHTM_CD=")
                         .append(shtm)
                         .append("&page=")
                         .append(pageNum)
@@ -195,7 +197,9 @@ public class DataRequestService {
                             OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
                             OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
                             OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
-                            CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).build();
+                            CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
+                            PROF_INFO(getJSONValue(json, "PROF_INFO")).
+                            TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
                     entireSubjectService.save(entireSubject);
                 }
                 System.out.println(String.format("%d-%d page : %d/%d", year, shtm, pageNum, MAX_PAGE));
