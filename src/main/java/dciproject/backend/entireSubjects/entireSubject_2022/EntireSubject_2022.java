@@ -54,7 +54,7 @@ public class EntireSubject_2022 implements EntireSubject {
     @Column
     private String PROF_INFO; // 교수명
 
-    @Column
+    @Column(length = 1000)
     private String TMTBL_INFO; // 시간표
 
 }

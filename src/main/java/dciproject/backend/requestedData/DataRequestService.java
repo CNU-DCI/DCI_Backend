@@ -6,7 +6,10 @@ import dciproject.backend.classRegistration.ClassRegistrationService;
 import dciproject.backend.classRegistration.classRegistration_2020.ClassRegistration_2020;
 import dciproject.backend.classRegistration.classRegistration_2021.ClassRegistration_2021;
 import dciproject.backend.classRegistration.classRegistration_2022.ClassRegistration_2022;
+import dciproject.backend.entireSubjects.EntireSubject;
 import dciproject.backend.entireSubjects.EntireSubjectService;
+import dciproject.backend.entireSubjects.entireSubject_2020.EntireSubject_2020;
+import dciproject.backend.entireSubjects.entireSubject_2021.EntireSubject_2021;
 import dciproject.backend.entireSubjects.entireSubject_2022.EntireSubject_2022;
 import dciproject.backend.subjectStatistics.SubjectStatisticsService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +43,7 @@ public class DataRequestService {
     }
 
     private String getJSONValue(JSONObject jsonObject, String key) {
-        return (String) jsonObject.get(key); // 한 강의의 JSON 을 가져와서, 특정 키를 검색
+        return String.valueOf(jsonObject.get(key)); // 한 강의의 JSON 을 가져와서, 특정 키를 검색
     }
 
     private JSONArray getResultJSONArray(String src) throws ParseException {
@@ -145,64 +148,98 @@ public class DataRequestService {
     public void saveEntireSubjectData() throws URISyntaxException, IOException, InterruptedException, ParseException {
         HttpClient httpClient = HttpClient.newHttpClient();
 
-        int year = 2022;
-        int shtm = 1;
+        int year = 2020;
 
-        HashSet<String> set = new HashSet<>();
-        for (; shtm < 3; shtm++) {
-            int pageNum = 1;
-            int MAX_PAGE = 1;
-            for (; pageNum <= MAX_PAGE; pageNum++) {
-                String requestBody = new StringBuilder()
-                        .append("row=300")
-                        .append("&P_YR=")
-                        .append(year)
-                        .append("&P_OPEN_SHTM_CD=")
-                        .append(shtm)
-                        .append("&page=")
-                        .append(pageNum)
-                        .append("&AUTH_KEY=21526D14653648DF9DED5FB5558B00B35B776E7F").toString();
-                // POST 요청 보내기
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(new URI("https://api.cnu.ac.kr/svc/offcam/pub/lsnSmry"))
-                        .header("Content-Type", "application/x-www-form-urlencoded")
-                        .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                        .build();
+        for (; year < 2023; year++) { // 년도
+            HashSet<String> set = new HashSet<>();
+            int shtm = 1;
+            for (; shtm < 3; shtm++) { // 학기
+                int pageNum = 1;
+                int MAX_PAGE = 1;
+                for (; pageNum <= MAX_PAGE; pageNum++) { // 페이지
+                    String requestBody = new StringBuilder()
+                            .append("row=300")
+                            .append("&P_YR=")
+                            .append(year)
+                            .append("&P_OPEN_SHTM_CD=")
+                            .append(shtm)
+                            .append("&page=")
+                            .append(pageNum)
+                            .append("&AUTH_KEY=21526D14653648DF9DED5FB5558B00B35B776E7F").toString();
+                    // POST 요청 보내기
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(new URI("https://api.cnu.ac.kr/svc/offcam/pub/lsnSmry"))
+                            .header("Content-Type", "application/x-www-form-urlencoded")
+                            .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                            .build();
 
-                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                String responseBody = response.body();
+                    HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    String responseBody = response.body();
 
-                JSONArray jsonArray = getResultJSONArray(responseBody); // "RESULT" 부분만 추려냄
+                    JSONArray jsonArray = getResultJSONArray(responseBody); // "RESULT" 부분만 추려냄
 
-                MAX_PAGE = Integer.parseInt((String) ((JSONObject) jsonArray.get(0)).get("PAGECNT"));
+                    MAX_PAGE = Integer.parseInt((String) ((JSONObject) jsonArray.get(0)).get("PAGECNT"));
 
 
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    JSONObject json = ((JSONObject) jsonArray.get(i));
-                    String id = getJSONValue(json, "OPEN_YR") + "-" + shtm +
-                            "-" + getJSONValue(json, "OPEN_SBJT_NO") +
-                            "-" + getJSONValue(json, "OPEN_DCLSS");
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        JSONObject json = ((JSONObject) jsonArray.get(i));
+                        String id = getJSONValue(json, "OPEN_YR") + "-" + shtm +
+                                "-" + getJSONValue(json, "OPEN_SBJT_NO") +
+                                "-" + getJSONValue(json, "OPEN_DCLSS");
 
-                    if (!getJSONValue(json, "ORGN_CLSF_CD").equals("학부") || set.contains(id)) continue;
-                    set.add(id);
+                        if (!getJSONValue(json, "ORGN_CLSF_CD").equals("학부") || set.contains(id)) continue;
+                        set.add(id);
 
-                    EntireSubject_2022 entireSubject = EntireSubject_2022.builder().
-                            subjectID(id).
-                            OPEN_YR(getJSONValue(json, "OPEN_YR")).
-                            SHTM(getJSONValue(json, "SHTM")).
-                            TRGT_SHYR(getJSONValue(json, "TRGT_SHYR")).
-                            ORGN_CLSF_CD(getJSONValue(json, "ORGN_CLSF_CD")).
-                            COLG(getJSONValue(json, "COLG")).
-                            DEGR_NM_SUST(getJSONValue(json, "DEGR_NM_SUST")).
-                            OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
-                            OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
-                            OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
-                            CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
-                            PROF_INFO(getJSONValue(json, "PROF_INFO")).
-                            TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
-                    entireSubjectService.save(entireSubject);
+
+                        EntireSubject entireSubject = switch (year) {
+                            case 2020 -> EntireSubject_2020.builder().
+                                    subjectID(id).
+                                    OPEN_YR(getJSONValue(json, "OPEN_YR")).
+                                    SHTM(getJSONValue(json, "SHTM")).
+                                    TRGT_SHYR(getJSONValue(json, "TRGT_SHYR")).
+                                    ORGN_CLSF_CD(getJSONValue(json, "ORGN_CLSF_CD")).
+                                    COLG(getJSONValue(json, "COLG")).
+                                    DEGR_NM_SUST(getJSONValue(json, "DEGR_NM_SUST")).
+                                    OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
+                                    OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
+                                    OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
+                                    CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
+                                    PROF_INFO(getJSONValue(json, "PROF_INFO")).
+                                    TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
+                            case 2021 -> EntireSubject_2021.builder().
+                                    subjectID(id).
+                                    OPEN_YR(getJSONValue(json, "OPEN_YR")).
+                                    SHTM(getJSONValue(json, "SHTM")).
+                                    TRGT_SHYR(getJSONValue(json, "TRGT_SHYR")).
+                                    ORGN_CLSF_CD(getJSONValue(json, "ORGN_CLSF_CD")).
+                                    COLG(getJSONValue(json, "COLG")).
+                                    DEGR_NM_SUST(getJSONValue(json, "DEGR_NM_SUST")).
+                                    OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
+                                    OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
+                                    OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
+                                    CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
+                                    PROF_INFO(getJSONValue(json, "PROF_INFO")).
+                                    TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
+                            case 2022 -> EntireSubject_2022.builder().
+                                    subjectID(id).
+                                    OPEN_YR(getJSONValue(json, "OPEN_YR")).
+                                    SHTM(getJSONValue(json, "SHTM")).
+                                    TRGT_SHYR(getJSONValue(json, "TRGT_SHYR")).
+                                    ORGN_CLSF_CD(getJSONValue(json, "ORGN_CLSF_CD")).
+                                    COLG(getJSONValue(json, "COLG")).
+                                    DEGR_NM_SUST(getJSONValue(json, "DEGR_NM_SUST")).
+                                    OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
+                                    OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
+                                    OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
+                                    CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
+                                    PROF_INFO(getJSONValue(json, "PROF_INFO")).
+                                    TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
+                            default -> null;
+                        };
+                        entireSubjectService.save(entireSubject);
+                    }
+                    System.out.println(String.format("%d-%d page : %d/%d", year, shtm, pageNum, MAX_PAGE));
                 }
-                System.out.println(String.format("%d-%d page : %d/%d", year, shtm, pageNum, MAX_PAGE));
             }
         }
         System.out.println("Complete");
