@@ -50,28 +50,4 @@ public class EntireSubject_2022 implements EntireSubject {
 
     @Column
     private String CPTN_DIV_NM; // 이수구분
-
-    @Column
-    private String PNT; // 학점
-
-    @Column
-    private String THEO_TMCNT; // 이론시수
-
-    @Column
-    private String PRAC_TMCNT; // 실습시수
-
-//    @Column(length = 5000)
-//    private String LSN_SMRY; // 수업 개요
-//
-//    @Column(length = 1000)
-//    private String SBJT_SHT; // 교과목표
-//
-//    @Column(length = 5000)
-//    private String TEMT_REF_LITRT; // 참고 문헌
-//
-//    @Column(length = 1000)
-//    private String REF_BOOK; // 참고 도서
-//
-//    @Column(length = 1000)
-//    private String PRE_LRN_CN; // 선수 학습 내용
 }

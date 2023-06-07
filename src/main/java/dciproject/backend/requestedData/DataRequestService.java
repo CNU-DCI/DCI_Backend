@@ -7,9 +7,8 @@ import dciproject.backend.classRegistration.classRegistration_2020.ClassRegistra
 import dciproject.backend.classRegistration.classRegistration_2021.ClassRegistration_2021;
 import dciproject.backend.classRegistration.classRegistration_2022.ClassRegistration_2022;
 import dciproject.backend.entireSubjects.EntireSubjectService;
-import dciproject.backend.entireSubjects.entireSubject_2020.EntireSubject_2020;
-import dciproject.backend.entireSubjects.entireSubject_2021.EntireSubject_2021;
 import dciproject.backend.entireSubjects.entireSubject_2022.EntireSubject_2022;
+import dciproject.backend.subjectStatistics.SubjectStatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -33,10 +32,11 @@ public class DataRequestService {
 
     private final EntireSubjectService entireSubjectService;
     private final ClassRegistrationService registrationService;
-
-    public DataRequestService(EntireSubjectService entireSubjectService, ClassRegistrationService registrationService) {
+    private final SubjectStatisticsService subjectStatisticsService;
+    public DataRequestService(EntireSubjectService entireSubjectService, ClassRegistrationService registrationService, SubjectStatisticsService subjectStatisticsService) {
         this.entireSubjectService = entireSubjectService;
         this.registrationService = registrationService;
+        this.subjectStatisticsService = subjectStatisticsService;
     }
 
     private String getJSONValue(JSONObject jsonObject, String key) {
@@ -105,14 +105,14 @@ public class DataRequestService {
 
                     String time = originTime.substring(0, 14); // time 추출
 
-                    int num = 0;
+                    int num = 1;
 
                     if (!hashMap.containsKey(id)) {
                         hashMap.put(id, new HashMap<>());
                         hashMap.get(id).put(time,1);
                     } else {
                         HashMap<String, Integer> hashmapForId = hashMap.get(id);
-                        num = hashmapForId.getOrDefault(time, 0) + 1;
+                        num += hashmapForId.getOrDefault(time, 0);
                         hashmapForId.put(time, num);
                         if(num!=1) {
                             registrationService.modifyRegistrationNumberById(year, id,time,num);
@@ -195,10 +195,7 @@ public class DataRequestService {
                             OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
                             OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
                             OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
-                            CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
-                            PNT(getJSONValue(json, "PNT")).
-                            THEO_TMCNT(getJSONValue(json, "THEO_TMCNT")).
-                            PRAC_TMCNT(getJSONValue(json, "PRAC_TMCNT")).build();
+                            CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).build();
                     entireSubjectService.save(entireSubject);
                 }
                 System.out.println(String.format("%d-%d page : %d/%d", year, shtm, pageNum, MAX_PAGE));
@@ -206,4 +203,11 @@ public class DataRequestService {
         }
         System.out.println("Complete");
     }
+
+
+
+    public void saveSubjectStatistics(){
+
+    }
+
 }

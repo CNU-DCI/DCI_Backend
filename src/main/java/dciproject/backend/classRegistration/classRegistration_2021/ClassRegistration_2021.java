@@ -32,4 +32,6 @@ public class ClassRegistration_2021 implements ClassRegistration {
     public void setRegistrationNumber(int n){
         registrationNumber=n;
     }
+
+
 }

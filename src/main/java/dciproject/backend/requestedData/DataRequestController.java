@@ -17,6 +17,12 @@ public class DataRequestController {
         this.dataRequestService = dataRequestService;
     }
 
+    @PostMapping("/subject-statistics/21526D14653648DF9DED5FB5558B00B35B776E7F")
+    private void saveSubjectStatistics(){
+        dataRequestService.saveSubjectStatistics();
+    }
+
+
     @PostMapping("/registration-api/21526D14653648DF9DED5FB5558B00B35B776E7F")
     private void saveRegistrationData() throws URISyntaxException, IOException, InterruptedException, ParseException, org.json.simple.parser.ParseException {
         dataRequestService.saveClassRegistrationData();
