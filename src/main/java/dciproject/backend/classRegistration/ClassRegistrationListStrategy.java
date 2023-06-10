@@ -28,9 +28,6 @@ public class ClassRegistrationListStrategy {
     public void addStrategy(List<ClassRegistration> newList, int year){
         yearMapper.put(year,count());
         classRegistrationListInstance.add(newList);
-
-        if(count()==1)
-            setStrategy(newList);
     }
     private int count(){
         return classRegistrationListInstance.size();

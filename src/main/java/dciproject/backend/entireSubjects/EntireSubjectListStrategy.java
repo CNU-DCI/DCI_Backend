@@ -23,9 +23,6 @@ public class EntireSubjectListStrategy {
     public void addStrategy(List<EntireSubject> newList, int year){
         yearMapper.put(year,count());
         entireSubjectListInstance.add(newList);
-
-        if(count()==1)
-            setStrategy(newList);
     }
     private int count(){
         return entireSubjectListInstance.size();
