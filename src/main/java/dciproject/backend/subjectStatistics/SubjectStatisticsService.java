@@ -281,16 +281,16 @@ public class SubjectStatisticsService {
         if(K > totalOfEntire){
             return CompetitionRate.LEVEL0; // 최소 수준을 만족하지 못함
         } else if (totalOfA <= totalOfB) {
-            return CompetitionRate.LEVEL1; // A<=B일 때 매우 낮음
+            return CompetitionRate.LEVEL1; // A<=B일 때 낮음
         } else {
             if (N > totalCompetitionRate) {
-                return CompetitionRate.LEVEL1; // A의 비율이 N%가 안될 경우, 매우 낮음
-            } else if (((double) A1 / totalOfA) >= 0.9) {
-                return CompetitionRate.LEVEL4; // A1의 비율이 A의 90% 이상 일 경우, 매우 높음 (0~15초)
-            } else if (((double) (A1 + A2) / totalOfA) >= 0.8) {
-                return CompetitionRate.LEVEL3; // (A1+A2)의 비율이 A의 80% 이상 일 경우, 높음 (15~30초)
+                return CompetitionRate.LEVEL1; // A의 비율이 N%가 안될 경우, 낮음
+            } else if (((double) A1 / totalOfA) >= 0.7) {
+                return CompetitionRate.LEVEL4; // A1의 비율이 A의 70% 이상 일 경우, 매우 높음 (0~15초)
+            } else if (((double) (A1 + A2) / totalOfA) >= 0.7) {
+                return CompetitionRate.LEVEL3; // (A1+A2)의 비율이 A의 70% 이상 일 경우, 높음 (15~30초)
             } else {
-                return CompetitionRate.LEVEL2; // 그 외의 경우, 낮음
+                return CompetitionRate.LEVEL2; // 그 외의 경우, 보통
             }
         }
     }
