@@ -1,12 +1,16 @@
 package dciproject.backend.subjectStatistics;
 
 
+import dciproject.backend.SingleToneResources;
 import dciproject.backend.classRegistration.ClassRegistration;
 import dciproject.backend.classRegistration.ClassRegistrationListStrategy;
 import dciproject.backend.classRegistration.ClassRegistrationService;
 import dciproject.backend.entireSubjects.EntireSubject;
 import dciproject.backend.entireSubjects.EntireSubjectListStrategy;
 import dciproject.backend.entireSubjects.EntireSubjectService;
+import dciproject.backend.entireSubjects.entireSubject_2020.EntireSubject_2020;
+import dciproject.backend.entireSubjects.entireSubject_2021.EntireSubject_2021;
+import dciproject.backend.entireSubjects.entireSubject_2022.EntireSubject_2022;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,19 +23,14 @@ import java.util.List;
 public class SubjectStatisticsService {
     private final SubjectStatisticsRepository subjectStatisticsRepository;
     private final ClassRegistrationService classRegistrationService;
-    private final ClassRegistrationListStrategy classRegistrationListStrategy;
-    private final EntireSubjectListStrategy entireSubjectListStrategy;
-
     private final EntireSubjectService entireSubjectService;
     private final EntityManager entityManager;
 
 
-    public SubjectStatisticsService(SubjectStatisticsRepository subjectStatisticsRepository, ClassRegistrationService classRegistrationService, EntityManager entityManager, ClassRegistrationListStrategy classRegistrationListStrategy, EntireSubjectListStrategy entireSubjectListStrategy, EntireSubjectService entireSubjectService) {
+    public SubjectStatisticsService(SubjectStatisticsRepository subjectStatisticsRepository, ClassRegistrationService classRegistrationService, EntityManager entityManager, EntireSubjectService entireSubjectService) {
         this.subjectStatisticsRepository = subjectStatisticsRepository;
         this.classRegistrationService = classRegistrationService;
         this.entityManager = entityManager;
-        this.classRegistrationListStrategy = classRegistrationListStrategy;
-        this.entireSubjectListStrategy = entireSubjectListStrategy;
         this.entireSubjectService = entireSubjectService;
     }
 
@@ -39,42 +38,27 @@ public class SubjectStatisticsService {
         return subjectStatisticsRepository.save(entity);
     }
 
-    @SuppressWarnings("unchecked")
-    private void initClassRegistrationListStrategy() {
-        classRegistrationListStrategy.addStrategy(
-                (List<ClassRegistration>) classRegistrationService.findAllByYear(2020), 2020);
-        classRegistrationListStrategy.addStrategy(
-                (List<ClassRegistration>) classRegistrationService.findAllByYear(2021), 2021);
-        classRegistrationListStrategy.addStrategy(
-                (List<ClassRegistration>) classRegistrationService.findAllByYear(2022), 2022);
-    }
 
-
-    private void initEntireSubjectListStrategy() {
-        entireSubjectListStrategy.addStrategy(entireSubjectService.findAllByYear(2020), 2020);
-        entireSubjectListStrategy.addStrategy(entireSubjectService.findAllByYear(2021), 2021);
-        entireSubjectListStrategy.addStrategy(entireSubjectService.findAllByYear(2022), 2022);
-    }
 
     private String date(long date) {
         return String.valueOf(date);
     }
 
     public void databaseBuild() {
-        initEntireSubjectListStrategy();
-        initClassRegistrationListStrategy();
         DecimalFormat formatter=new DecimalFormat("#.##");
+
+        EntireSubjectListStrategy subjectStrategy=SingleToneResources.entireSubjectListStrategy;
+        ClassRegistrationListStrategy classStrategy=SingleToneResources.classRegistrationListStrategy;
+
         for (int year = 2020; year < 2023; year++) {
+            subjectStrategy.switchStrategy(year);
+            classStrategy.switchStrategy(year); // year 정보에 대해 strategy 선택
 
-            entireSubjectListStrategy.switchStrategy(year);
-            classRegistrationListStrategy.switchStrategy(year); // year 정보에 대해 strategy 선택
-
-            List<EntireSubject> entireSubjectList = entireSubjectListStrategy.getStrategy();
-            List<ClassRegistration> classRegistrations = classRegistrationListStrategy.getStrategy();
+            List<EntireSubject> entireSubjectList = subjectStrategy.getStrategy();
+            List<ClassRegistration> classRegistrations = classStrategy.getStrategy();
 
             log.info("STRATEGE subject: {}", entireSubjectList.size());
             log.info("STRATEGE registration: {}", classRegistrations.size());
-
 
             for (EntireSubject subject : entireSubjectList) { // 모든 수강 과목에 대해서 진행
                 String subjectID = subject.getSubjectID(); // 현재 과목 ID
@@ -322,5 +306,23 @@ public class SubjectStatisticsService {
 
         return Long.parseLong(start) <= Long.parseLong(date) &&
                 Long.parseLong(end) >= Long.parseLong(date);
+    }
+
+
+
+    public boolean isEqualOpener(String subjectID, String opener){
+        int year=Integer.parseInt(subjectID.split("-")[0]);
+
+        EntireSubject entireSubject=switch (year) {
+            case 2020 -> entityManager.find(EntireSubject_2020.class, subjectID);
+            case 2021 -> entityManager.find(EntireSubject_2021.class, subjectID);
+            case 2022 -> entityManager.find(EntireSubject_2022.class, subjectID);
+            default -> null;
+        };
+        log.info("isequal?: {}, {}",subjectID, entireSubject!=null ? entireSubject.getDEGR_NM_SUST() : "null");
+        return entireSubject!=null && opener.equals(entireSubject.getDEGR_NM_SUST());
+    }
+    public SubjectStatistics findBySubjectID(String subjectID){
+        return subjectStatisticsRepository.findById(subjectID).orElse(null);
     }
 }
