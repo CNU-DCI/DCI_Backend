@@ -9,11 +9,15 @@ spring:
     hibernate:
       ddl-auto: update
     database: mysql
-    show-sql: false
+    show-sql: true
     open-in-view: false
     properties:
       hibernate:
+        format_sql: true
         query.in_clause_parameter_padding: true
+  logging:
+    level:
+      org.hibernate.type.descriptor.sql.BasicBinder: trace
   web:
     resources:
       static-locations: classpath:/static/

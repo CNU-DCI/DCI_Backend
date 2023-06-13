@@ -1,7 +1,7 @@
 package dciproject.backend.function.Controller;
 
 import dciproject.backend.function.DTO.SbjRequestDTO;
-import dciproject.backend.function.DTO.SbjResponseDTO;
+import dciproject.backend.function.Repository.SubjectMapping;
 import dciproject.backend.function.Service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +19,8 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/api/search")
-    public List<SbjResponseDTO> requestSearchSubject(@ModelAttribute SbjRequestDTO sbjRequestDTO){
-        log.info("SearchSubject::: Year={}, Shmt={}, Cdn={}, Dn={}, Keyword={}",
+    public List<SubjectMapping> requestSearchSubject(@ModelAttribute SbjRequestDTO sbjRequestDTO){
+        log.info("SearchSubjectController::: Year={}, Shmt={}, Cdn={}, Dn={}, Keyword={}",
                 sbjRequestDTO.getYear(),
                 sbjRequestDTO.getShmt(),
                 sbjRequestDTO.getCdn(),
@@ -28,7 +28,7 @@ public class SearchController {
                 sbjRequestDTO.getKeyword()
         );
 
-        List<SbjResponseDTO> sbjResponse = searchService.getSbjs(sbjRequestDTO);
+        List<SubjectMapping> sbjResponse = searchService.getSbjs(sbjRequestDTO);
 
         return sbjResponse;
     }
