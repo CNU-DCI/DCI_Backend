@@ -25,6 +25,12 @@ public class SubjectStatisticsController {
         subjectStatisticsService.databaseBuild();
     }
 
+
+    @GetMapping("/statistics/rank")
+    private List<SubjectStatistics> readByRank(@RequestParam int rank, @RequestParam int sortingOrder){
+        return subjectStatisticsService.getRankedList(rank,sortingOrder);
+    }
+
     @GetMapping("/statistics/read") // 하나의 과목 통계정보(ID, 경쟁률, 정정인원) 가져오기
     private SubjectStatistics read(@RequestParam String subjectID){
         return subjectStatisticsService.findBySubjectID(subjectID);

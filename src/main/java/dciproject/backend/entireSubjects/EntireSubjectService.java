@@ -8,15 +8,18 @@ import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class EntireSubjectService {
 
     private final EntityManager entityManager;
-
-    public EntireSubjectService( EntityManager entityManager) {
+    private final MajorRepository majorRepository;
+    public EntireSubjectService(EntityManager entityManager, MajorRepository majorRepository) {
         this.entityManager = entityManager;
+        this.majorRepository = majorRepository;
     }
 
     @Transactional
@@ -76,4 +79,38 @@ public class EntireSubjectService {
         };
         return subject!=null ? subject : saveCommonSubjectData(year,id,name);
     }
+
+
+    public void saveLists(){
+        List<EntireSubject> list=this.findAllByYear(2022);
+        HashMap<String, String> database=new HashMap<>();
+
+        for(EntireSubject subject : list){
+            String colg=subject.getCOLG();
+            String major=subject.getDEGR_NM_SUST();
+
+            if(!database.containsKey(major)){ // 현재 학과가 없다면
+                database.put(major,colg);
+               majorRepository.save(new Major(major,colg));
+            }
+        }
+    }
+
+
+    public HashMap<String,List<String>> loadMajorAll(){
+        List<Major> list = majorRepository.findAll();
+        HashMap<String, List<String>> result=new HashMap<>();
+
+        for(Major majorEntity : list){
+            String colg= majorEntity.getCollege();
+            String major= majorEntity.getMajor();
+            if(!result.containsKey(colg)){ // 현재 단과대 없다면
+                result.put(colg,new ArrayList<>());
+            }
+            result.get(colg).add(major);
+        }
+
+        return result;
+    }
+
 }

@@ -16,10 +16,10 @@ public class KeywordSetController {
     }
 
 
-    @PostMapping("/keyword/save")
-    private void save(@RequestBody String keyword){
-        keywordSetService.saveKeyword(keyword);
-    }
+//    @PostMapping("/keyword/save")
+//    private void save(@RequestBody String keyword){
+//        keywordSetService.saveKeyword(keyword);
+//    }
 
 
     @GetMapping("/keyword/read") // rank 까지의 리스트를 출력 order==1 ASC, else DESC

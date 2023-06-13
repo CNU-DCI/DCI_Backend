@@ -11,6 +11,7 @@ import dciproject.backend.entireSubjects.EntireSubjectService;
 import dciproject.backend.entireSubjects.entireSubject_2020.EntireSubject_2020;
 import dciproject.backend.entireSubjects.entireSubject_2021.EntireSubject_2021;
 import dciproject.backend.entireSubjects.entireSubject_2022.EntireSubject_2022;
+import dciproject.backend.keywordSet.KeywordSet;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -292,24 +293,6 @@ public class SubjectStatisticsService {
         return result;
     } // 특정 구간의 registration number 구하기
 
-    public boolean isCorrectedDate(String subjectId, String date) {
-        String[] args = subjectId.split("-");
-        final int CORRECTED = 6;
-        // 2022-1-1977-2011-03
-        int year = Integer.parseInt(args[0]);
-        int shtm = Integer.parseInt(args[1]);
-
-        String[] period = Period.getPeriod(year, shtm, CORRECTED);
-        String start = period[0];
-        String end = period[1];
-        // 정정기간의 인원을 산출하려면 리스트에서 정정기간 이후의 값을 가진 엔티티를 가져와야함
-
-        return Long.parseLong(start) <= Long.parseLong(date) &&
-                Long.parseLong(end) >= Long.parseLong(date);
-    }
-
-
-
     public boolean isEqualOpener(String subjectID, String opener){
         int year=Integer.parseInt(subjectID.split("-")[0]);
 
@@ -324,5 +307,41 @@ public class SubjectStatisticsService {
     }
     public SubjectStatistics findBySubjectID(String subjectID){
         return subjectStatisticsRepository.findById(subjectID).orElse(null);
+    }
+
+
+    public List<SubjectStatistics> getRankedList(int rank, int order){
+        List<SubjectStatistics> list=subjectStatisticsRepository.findAll();
+
+        if(order==1) // ASC
+            list.sort((s1,s2)-> {
+                if(s1.getComp_level()!=s2.getComp_level()) { // 경쟁률의 레벨을 비교
+                    return s1.getComp_level()-s2.getComp_level();
+                }else{
+                    if(s1.getComp_rate()>s2.getComp_rate()){ // 경쟁률의 수치를 비교
+                        return -1;
+                    }else if(s1.getComp_rate()<s2.getComp_rate()){
+                        return 1;
+                    }else{
+                        return 0;
+                    }
+                }
+            });
+        else // DESC
+            list.sort((s1,s2)-> {
+                if(s1.getComp_level()!=s2.getComp_level()) {
+                    return s2.getComp_level()-s1.getComp_level();
+                }else{
+                    if(s2.getComp_rate()>s1.getComp_rate()){
+                        return -1;
+                    }else if(s2.getComp_rate()<s1.getComp_rate()){
+                        return 1;
+                    }else{
+                        return 0;
+                    }
+                }
+            });
+
+        return list.subList(0, Math.min(list.size(), rank));
     }
 }

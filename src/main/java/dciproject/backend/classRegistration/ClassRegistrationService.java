@@ -6,6 +6,7 @@ import dciproject.backend.classRegistration.classRegistration_2021.ClassRegistra
 import dciproject.backend.classRegistration.classRegistration_2021.ClassRegistration_2021;
 import dciproject.backend.classRegistration.classRegistration_2022.ClassRegistrationPK_2022;
 import dciproject.backend.classRegistration.classRegistration_2022.ClassRegistration_2022;
+import dciproject.backend.keywordSet.KeywordSet;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Service;
@@ -80,5 +81,6 @@ public class ClassRegistrationService {
 
         entityManager.persist(merged);
     }
+
 
 }
