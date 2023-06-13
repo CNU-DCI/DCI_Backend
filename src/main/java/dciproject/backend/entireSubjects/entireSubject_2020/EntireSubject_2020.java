@@ -60,18 +60,9 @@ public class EntireSubject_2020 implements EntireSubject {
     @Column(name = "PRAC_TMCNT")
     private String pracTmcnt; // 실습시수
 
-//    @Column(length = 5000)
-//    private String LSN_SMRY; // 수업 개요
-//
-//    @Column(length = 1000)
-//    private String SBJT_SHT; // 교과목표
-//
-//    @Column(length = 5000)
-//    private String TEMT_REF_LITRT; // 참고 문헌
-//
-//    @Column(length = 1000)
-//    private String REF_BOOK; // 참고 도서
-//
-//    @Column(length = 1000)
-//    private String PRE_LRN_CN; // 선수 학습 내용
+    @Column(name = "PROF_INFO")
+    private String profInfo; // 교수명
+
+    @Column(name = "TMTBL_INFO", length = 1000)
+    private String tmtblInfo; // 시간표
 }

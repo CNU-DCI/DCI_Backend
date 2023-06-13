@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface EntireSubject_2020Repository extends JpaRepository<EntireSubject_2020, String> {
     //List<SbjResponseDTO> findAllByshtmAndcptnDivNmAnddegrNmSustAndopenSbjtNmContaining (String s, String c, String d, String k);
 
-    List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(String shtm, String cptnDivNm, String degrNmSust, String openSbjtNm);
+    List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNm(String shtm, String cptnDivNm, String degrNmSust, String openSbjtNm);
 
 }

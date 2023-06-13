@@ -21,7 +21,6 @@ public class SearchService {
     private final EntireSubjectRepository_2021 subjectRepository_2021;
     private final EntireSubjectRepository_2022 subjectRepository_2022;
 
-
     public List<SubjectMapping> getSbjs (SbjRequestDTO sjRequestDTO){
         String year = sjRequestDTO.getYear();
         String shtm = sjRequestDTO.getShmt();
@@ -29,17 +28,9 @@ public class SearchService {
         String dn = sjRequestDTO.getDn();
         String keyword = sjRequestDTO.getKeyword();
 
-        log.info("SearchSubjectService::: Year={}, Shmt={}, Cdn={}, Dn={}, Keyword={}",
-                year,
-                shtm,
-                cdn,
-                dn,
-                keyword
-        );
-
         List<SubjectMapping> sbjResponseDTOList = null;
 
-                sbjResponseDTOList = subjectRepository_2020.findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(shtm, cdn, dn, keyword);
+                sbjResponseDTOList = subjectRepository_2020.findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNm(shtm, cdn, dn, keyword);
 
         return sbjResponseDTOList;
     }
