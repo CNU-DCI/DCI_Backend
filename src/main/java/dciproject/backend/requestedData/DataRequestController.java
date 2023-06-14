@@ -2,6 +2,7 @@ package dciproject.backend.requestedData;
 
 
 import org.apache.tomcat.util.json.ParseException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,11 @@ public class DataRequestController {
     @PostMapping("/registration-api/21526D14653648DF9DED5FB5558B00B35B776E7F")
     private void saveRegistrationData() throws URISyntaxException, IOException, InterruptedException, ParseException, org.json.simple.parser.ParseException {
         dataRequestService.saveClassRegistrationData();
+    }
+
+    @GetMapping("/api/hi")
+    private String hi(){
+        return "OK";
     }
     @PostMapping("/subject-plan-api/21526D14653648DF9DED5FB5558B00B35B776E7F")
     private void saveEntireSubjectData() throws URISyntaxException, IOException, InterruptedException, ParseException, org.json.simple.parser.ParseException {
