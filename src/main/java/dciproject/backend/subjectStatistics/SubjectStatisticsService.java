@@ -66,7 +66,7 @@ public class SubjectStatisticsService {
 
                 if (registrationListById.size() < 1) continue;
 
-                int SHTM = subject.getSHTM().charAt(0) - '0'; // 현재 학기
+                int SHTM = subject.getShtm().charAt(0) - '0'; // 현재 학기
                 String[] correctedPeriod = Period.getPeriod(year, SHTM, 6); // 현재 년도 학기의 정정기간
 
                 int correctedNum = // 현재 년도 학기의 정정인원
@@ -89,8 +89,8 @@ public class SubjectStatisticsService {
 
                 String[] periodOfSHYR;
 
-                if (subject.getCPTN_DIV_NM().contains("전공")) { // 전공일 경우
-                    int SHYR = Integer.parseInt(subject.getTRGT_SHYR());
+                if (subject.getCptnDivNm().contains("전공")) { // 전공일 경우
+                    int SHYR = Integer.parseInt(subject.getTrgtShyr());
                     boolean isEntireMode = false;
 
                     while (SHYR != 5) {
@@ -298,8 +298,8 @@ public class SubjectStatisticsService {
             case 2022 -> entityManager.find(EntireSubject_2022.class, subjectID);
             default -> null;
         };
-        log.info("isequal?: {}, {}",subjectID, entireSubject!=null ? entireSubject.getDEGR_NM_SUST() : "null");
-        return entireSubject!=null && opener.equals(entireSubject.getDEGR_NM_SUST());
+        log.info("isequal?: {}, {}",subjectID, entireSubject!=null ? entireSubject.getDegrNmSust() : "null");
+        return entireSubject!=null && opener.equals(entireSubject.getDegrNmSust());
     }
     public SubjectStatistics findBySubjectID(String subjectID){
         return subjectStatisticsRepository.findById(subjectID).orElse(null);
