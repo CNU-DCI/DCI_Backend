@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -306,8 +306,8 @@ public class SubjectStatisticsService {
     }
 
 public String getName(String subjectID){
-
-        int year=Integer.parseInt(subjectID.split("-")[0]);
+        String[] args=subjectID.split("-");
+        int year=Integer.parseInt(args[0]);
 
         return switch (year){
             case 2020-> entityManager.find(EntireSubject_2020.class,subjectID).getOpenSbjtNm();
@@ -318,18 +318,11 @@ public String getName(String subjectID){
     }
 
     public List<ResponseForSubjectPerClass> getRankedList(int rank, int order){
-        List<ResponseForSubjectPerClass> list=
-                subjectStatisticsRepository.findAll().stream()
-                        .map(subject->ResponseForSubjectPerClass.builder().
-                                subjectID(subject.getSubjectID()).
-                                corrected_num(subject.getCorrectedNum()).
-                                comp_rate(subject.getComp_rate()).
-                                comp_level(subject.getComp_level()).
-                                openSbjtNm(getName(subject.getSubjectID())).build()).toList();
-
+                List<ResponseForSubjectPerClass> list= new ArrayList<>();
+        List<SubjectStatistics> src=subjectStatisticsRepository.findAll();
 
         if(order==0) // ASC
-            list.sort((s1,s2)-> {
+            src.sort((s1,s2)-> {
                 if(s1.getComp_level()!=s2.getComp_level()) { // 경쟁률의 레벨을 비교
                     return s1.getComp_level()-s2.getComp_level();
                 }else{
@@ -343,7 +336,7 @@ public String getName(String subjectID){
                 }
             });
         else // DESC
-            list.sort((s1,s2)-> {
+            src.sort((s1,s2)-> {
                 if(s1.getComp_level()!=s2.getComp_level()) {
                     return s2.getComp_level()-s1.getComp_level();
                 }else{
@@ -358,7 +351,14 @@ public String getName(String subjectID){
             });
 
 
+        list=src.subList(0,Math.min(src.size(), rank))
+                        .stream().map(subject->ResponseForSubjectPerClass.builder().
+                        subjectID(subject.getSubjectID()).
+                        corrected_num(subject.getCorrectedNum()).
+                        comp_rate(subject.getComp_rate()).
+                        comp_level(subject.getComp_level()).
+                        openSbjtNm(getName(subject.getSubjectID())).build()).toList();
 
-        return list.subList(0, Math.min(list.size(), rank));
+        return list;
     }
 }
