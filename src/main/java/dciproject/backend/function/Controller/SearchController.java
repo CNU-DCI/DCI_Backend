@@ -20,10 +20,11 @@ public class SearchController {
 
     @GetMapping("/api/search")
     public List<SubjectMapping> requestSearchSubject(@ModelAttribute SbjRequestDTO sbjRequestDTO){
-        log.info("SearchSubjectController::: Year={}, Shmt={}, Cdn={}, Dn={}, Keyword={}",
+        log.info("SearchSubjectController::: Year={}, Shmt={}, Cdn={}, Colg={}, Dn={}, Keyword={}",
                 sbjRequestDTO.getYear(),
                 sbjRequestDTO.getShmt(),
                 sbjRequestDTO.getCdn(),
+                sbjRequestDTO.getColg(),
                 sbjRequestDTO.getDn(),
                 sbjRequestDTO.getKeyword()
         );

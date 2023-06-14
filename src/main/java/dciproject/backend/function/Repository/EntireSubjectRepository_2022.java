@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EntireSubjectRepository_2022 extends JpaRepository<EntireSubject_2022, String> {
-    public List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(String shtm, String cdn, String dn, String keyword);
+    List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndColgAndOpenSbjtNmContaining(String shtm, String cptnDivNm, String degrNmSust, String colg, String openSbjtNm);
 }

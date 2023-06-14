@@ -25,25 +25,28 @@ public class SearchService {
         String year = sjRequestDTO.getYear();
         String shtm = sjRequestDTO.getShmt();
         String cdn = sjRequestDTO.getCdn();
+        String colg = sjRequestDTO.getColg();
         String dn = sjRequestDTO.getDn();
         String keyword = sjRequestDTO.getKeyword();
 
-        List<SubjectMapping> sbjResponseDTOList = null;
+        log.info("SearchSubjectController::: Year={}, Shmt={}, Cdn={}, Colg={}, Dn={}, Keyword={}",
+                year,
+                shtm,
+                cdn,
+                colg,
+                dn,
+                keyword
+        );
 
-        switch (year){
-            case "2020":
-                sbjResponseDTOList = subjectRepository_2020.findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(shtm, cdn, dn, keyword);
-                break;
-            case "2021":
-                sbjResponseDTOList = subjectRepository_2021.findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(shtm, cdn, dn, keyword);
-                break;
-            case "2022":
-                sbjResponseDTOList = subjectRepository_2022.findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(shtm, cdn, dn, keyword);
-                break;
-        }
-
-
-
+        List<SubjectMapping> sbjResponseDTOList = switch (year){
+            case "2020" ->
+                subjectRepository_2020.findAllByShtmAndCptnDivNmAndDegrNmSustAndColgAndOpenSbjtNmContaining(shtm, cdn, dn, colg, keyword);
+            case "2021"->
+                subjectRepository_2021.findAllByShtmAndCptnDivNmAndDegrNmSustAndColgAndOpenSbjtNmContaining(shtm, cdn, dn, colg, keyword);
+            case "2022"->
+                subjectRepository_2022.findAllByShtmAndCptnDivNmAndDegrNmSustAndColgAndOpenSbjtNmContaining(shtm, cdn, dn, colg, keyword);
+            default -> null;
+        };
 
         return sbjResponseDTOList;
     }

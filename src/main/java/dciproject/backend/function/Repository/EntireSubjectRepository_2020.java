@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface EntireSubjectRepository_2020 extends JpaRepository<EntireSubject_2020, String> {
-    List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(String shtm, String cptnDivNm, String degrNmSust, String openSbjtNm);
+    List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndColgAndOpenSbjtNmContaining(String shtm, String cptnDivNm, String degrNmSust, String colg, String openSbjtNm);
 
 }
