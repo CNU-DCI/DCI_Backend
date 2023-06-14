@@ -20,23 +20,23 @@ public class SubjectStatisticsController {
         this.subjectStatisticsService = subjectStatisticsService;
     }
 
-    @PostMapping("/statistics/build30219$#L4J38123")
+    @PostMapping("/api/statistics/build30219$#L4J38123")
     private void dataInput(){
         subjectStatisticsService.databaseBuild();
     }
 
 
-    @GetMapping("/statistics/rank")
+    @GetMapping("/api/statistics/rank")
     private List<SubjectStatistics> readByRank(@RequestParam int rank, @RequestParam int sortingOrder){
         return subjectStatisticsService.getRankedList(rank,sortingOrder);
     }
 
-    @GetMapping("/statistics/read") // 하나의 과목 통계정보(ID, 경쟁률, 정정인원) 가져오기
+    @GetMapping("/api/statistics/read") // 하나의 과목 통계정보(ID, 경쟁률, 정정인원) 가져오기
     private SubjectStatistics read(@RequestParam String subjectID){
         return subjectStatisticsService.findBySubjectID(subjectID);
     }
 
-    @GetMapping("/statistics/readAll-class") // 분반 별 통계정보 가져오기
+    @GetMapping("/api/statistics/readAll-class") // 분반 별 통계정보 가져오기
     private List<SubjectStatistics> readAllByClass(@RequestParam String subjectID, @RequestParam String opener){
         String nextClass="00";
         String targetSubject=subjectID.substring(0, subjectID.length()-2);

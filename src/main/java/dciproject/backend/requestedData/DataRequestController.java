@@ -18,7 +18,7 @@ public class DataRequestController {
         this.dataRequestService = dataRequestService;
     }
 
-    @PostMapping("/registration-api/21526D14653648DF9DED5FB5558B00B35B776E7F")
+    @PostMapping("/api/registration-api/21526D14653648DF9DED5FB5558B00B35B776E7F")
     private void saveRegistrationData() throws URISyntaxException, IOException, InterruptedException, ParseException, org.json.simple.parser.ParseException {
         dataRequestService.saveClassRegistrationData();
     }
@@ -27,7 +27,7 @@ public class DataRequestController {
     private String hi(){
         return "OK";
     }
-    @PostMapping("/subject-plan-api/21526D14653648DF9DED5FB5558B00B35B776E7F")
+    @PostMapping("/api/subject-plan-api/21526D14653648DF9DED5FB5558B00B35B776E7F")
     private void saveEntireSubjectData() throws URISyntaxException, IOException, InterruptedException, ParseException, org.json.simple.parser.ParseException {
         dataRequestService.saveEntireSubjectData();
     }

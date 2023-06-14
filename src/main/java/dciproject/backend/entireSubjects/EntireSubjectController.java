@@ -17,7 +17,7 @@ public class EntireSubjectController {
         this.entireSubjectService = entireSubjectService;
     }
 
-    @GetMapping("/subject/load-majors")
+    @GetMapping("/api/subject/load-majors")
     private List<ResponseForMajor> loadAllMajor(){
         HashMap<String, List<String>> map = entireSubjectService.loadMajorAll();
         List<ResponseForMajor> result=new ArrayList<>();
@@ -28,7 +28,7 @@ public class EntireSubjectController {
         return result;
     }
 
-    @PostMapping("/subject/save-major11101")
+    @PostMapping("/api/subject/save-major11101")
     private String saveMajor(){
         entireSubjectService.saveLists();
         return "OK";
