@@ -1,0 +1,46 @@
+.magnify_icon {
+  display: inline-block;
+  width: 10%;
+}
+
+.title_magnify_icon,
+.title_shopping_icon {
+  padding-right: 5px;
+}
+
+[contenteditable="true"]:empty:not(:focus)::before {
+  content: attr(placeholder);
+  pointer-events: none;
+  display: block;
+}
+
+.shopping_icon,
+.trash_icon {
+  padding-left: 5px;
+  box-sizing: border-box;
+}
+
+.chaveron_icon {
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.comparesbj::-webkit-scrollbar {
+  height: 5px;
+}
+
+.resultTable::-webkit-scrollbar {
+  width: 5px;
+}
+
+.comparesbj::-webkit-scrollbar-thumb,
+.resultTable::-webkit-scrollbar-thumb {
+  background: #50d2e3;
+  border-radius: 10px;
+}
+
+.comparesbj::-webkit-scrollbar-track,
+.resultTable::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, 0.1);
+}
