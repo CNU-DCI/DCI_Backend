@@ -32,7 +32,7 @@ public class EntireSubjectService {
         TypedQuery<EntireSubject> query;
 
         query=switch (year){
-            case 2020 -> entityManager.createQuery("SELECT e FROM EntireSubject_2020 e WHERE e.OPEN_YR='2022'", EntireSubject.class);
+            case 2020 -> entityManager.createQuery("SELECT e FROM EntireSubject_2020 e", EntireSubject.class);
             case 2021 -> entityManager.createQuery("SELECT e FROM EntireSubject_2021 e", EntireSubject.class);
             case 2022 -> entityManager.createQuery("SELECT e FROM EntireSubject_2022 e", EntireSubject.class);
             default -> null;
@@ -42,27 +42,24 @@ public class EntireSubjectService {
     }
 
     @Transactional
-    public EntireSubject saveCommonSubjectData(int year,String id,String name){
+    public dciproject.backend.entireSubjects.EntireSubject saveCommonSubjectData(int year, String id, String name){
         String[] info=id.split("-");
-        EntireSubject subject= switch (year) {
+        dciproject.backend.entireSubjects.EntireSubject subject= switch (year) {
             case 2022-> EntireSubject_2022.builder().
-                    subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
-                    TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
-                    OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
-                    PROF_INFO("undefined").TMTBL_INFO("undefined").
-                    CPTN_DIV_NM("일반선택").build();
+                    subjectID(id).openYr(String.valueOf(year)).shtm(info[1] + "학기").
+                    trgtShyr("1").orgnClsfCd("학부").colg("대학").degrNmSust("학과공통").
+                    openSbjtNo(info[2] + "-" + info[3]).openDclss(info[4]).openSbjtNm(name).
+                    cptnDivNm("일반선택").build();
             case 2021-> EntireSubject_2021.builder().
-                    subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
-                    TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
-                    OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
-                    PROF_INFO("undefined").TMTBL_INFO("undefined").
-                    CPTN_DIV_NM("일반선택").build();
+                    subjectID(id).openYr(String.valueOf(year)).shtm(info[1] + "학기").
+                    trgtShyr("1").orgnClsfCd("학부").colg("대학").degrNmSust("학과공통").
+                    openSbjtNo(info[2] + "-" + info[3]).openDclss(info[4]).openSbjtNm(name).
+                    cptnDivNm("일반선택").build();
             case 2020-> EntireSubject_2020.builder().
-                    subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
-                    TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
-                    OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
-                    PROF_INFO("undefined").TMTBL_INFO("undefined").
-                    CPTN_DIV_NM("일반선택").build();
+                    subjectID(id).openYr(String.valueOf(year)).shtm(info[1] + "학기").
+                    trgtShyr("1").orgnClsfCd("학부").colg("대학").degrNmSust("학과공통").
+                    openSbjtNo(info[2] + "-" + info[3]).openDclss(info[4]).openSbjtNm(name).
+                    cptnDivNm("일반선택").build();
             default -> null;
         };
 
@@ -86,8 +83,8 @@ public class EntireSubjectService {
         HashMap<String, String> database=new HashMap<>();
 
         for(EntireSubject subject : list){
-            String colg=subject.getCOLG();
-            String major=subject.getDEGR_NM_SUST();
+            String colg=subject.getColg();
+            String major=subject.getDegrNmSust();
 
             if(!database.containsKey(major)){ // 현재 학과가 없다면
                 database.put(major,colg);

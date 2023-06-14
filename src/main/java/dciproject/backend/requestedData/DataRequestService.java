@@ -192,46 +192,47 @@ public class DataRequestService {
                         EntireSubject entireSubject = switch (year) {
                             case 2020 -> EntireSubject_2020.builder().
                                     subjectID(id).
-                                    OPEN_YR(getJSONValue(json, "OPEN_YR")).
-                                    SHTM(getJSONValue(json, "SHTM")).
-                                    TRGT_SHYR(getJSONValue(json, "TRGT_SHYR")).
-                                    ORGN_CLSF_CD(getJSONValue(json, "ORGN_CLSF_CD")).
-                                    COLG(getJSONValue(json, "COLG")).
-                                    DEGR_NM_SUST(getJSONValue(json, "DEGR_NM_SUST")).
-                                    OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
-                                    OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
-                                    OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
-                                    CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
-                                    PROF_INFO(getJSONValue(json, "PROF_INFO")).
-                                    TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
+                                    openYr(getJSONValue(json, "OPEN_YR")).
+                                    shtm(getJSONValue(json, "SHTM")).
+                                    trgtShyr(getJSONValue(json, "TRGT_SHYR")).
+                                    orgnClsfCd(getJSONValue(json, "ORGN_CLSF_CD")).
+                                    colg(getJSONValue(json, "COLG")).
+                                    degrNmSust(getJSONValue(json, "DEGR_NM_SUST")).
+                                    openSbjtNo(getJSONValue(json, "OPEN_SBJT_NO")).
+                                    openDclss(getJSONValue(json, "OPEN_DCLSS")).
+                                    openSbjtNm(getJSONValue(json, "OPEN_SBJT_NM")).
+                                    cptnDivNm(getJSONValue(json, "CPTN_DIV_NM")).
+                                    profInfo(getJSONValue(json, "PROF_INFO")).
+                                    tmtblInfo(getJSONValue(json, "TMTBL_INFO")).build();
                             case 2021 -> EntireSubject_2021.builder().
                                     subjectID(id).
-                                    OPEN_YR(getJSONValue(json, "OPEN_YR")).
-                                    SHTM(getJSONValue(json, "SHTM")).
-                                    TRGT_SHYR(getJSONValue(json, "TRGT_SHYR")).
-                                    ORGN_CLSF_CD(getJSONValue(json, "ORGN_CLSF_CD")).
-                                    COLG(getJSONValue(json, "COLG")).
-                                    DEGR_NM_SUST(getJSONValue(json, "DEGR_NM_SUST")).
-                                    OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
-                                    OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
-                                    OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
-                                    CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
-                                    PROF_INFO(getJSONValue(json, "PROF_INFO")).
-                                    TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
+                                    openYr(getJSONValue(json, "OPEN_YR")).
+                                    shtm(getJSONValue(json, "SHTM")).
+                                    trgtShyr(getJSONValue(json, "TRGT_SHYR")).
+                                    orgnClsfCd(getJSONValue(json, "ORGN_CLSF_CD")).
+                                    colg(getJSONValue(json, "COLG")).
+                                    degrNmSust(getJSONValue(json, "DEGR_NM_SUST")).
+                                    openSbjtNo(getJSONValue(json, "OPEN_SBJT_NO")).
+                                    openDclss(getJSONValue(json, "OPEN_DCLSS")).
+                                    openSbjtNm(getJSONValue(json, "OPEN_SBJT_NM")).
+                                    cptnDivNm(getJSONValue(json, "CPTN_DIV_NM")).
+                                    profInfo(getJSONValue(json, "PROF_INFO")).
+                                    tmtblInfo(getJSONValue(json, "TMTBL_INFO")).build();
                             case 2022 -> EntireSubject_2022.builder().
                                     subjectID(id).
-                                    OPEN_YR(getJSONValue(json, "OPEN_YR")).
-                                    SHTM(getJSONValue(json, "SHTM")).
-                                    TRGT_SHYR(getJSONValue(json, "TRGT_SHYR")).
-                                    ORGN_CLSF_CD(getJSONValue(json, "ORGN_CLSF_CD")).
-                                    COLG(getJSONValue(json, "COLG")).
-                                    DEGR_NM_SUST(getJSONValue(json, "DEGR_NM_SUST")).
-                                    OPEN_SBJT_NO(getJSONValue(json, "OPEN_SBJT_NO")).
-                                    OPEN_DCLSS(getJSONValue(json, "OPEN_DCLSS")).
-                                    OPEN_SBJT_NM(getJSONValue(json, "OPEN_SBJT_NM")).
-                                    CPTN_DIV_NM(getJSONValue(json, "CPTN_DIV_NM")).
-                                    PROF_INFO(getJSONValue(json, "PROF_INFO")).
-                                    TMTBL_INFO(getJSONValue(json, "TMTBL_INFO")).build();
+                                    subjectID(id).
+                                    openYr(getJSONValue(json, "OPEN_YR")).
+                                    shtm(getJSONValue(json, "SHTM")).
+                                    trgtShyr(getJSONValue(json, "TRGT_SHYR")).
+                                    orgnClsfCd(getJSONValue(json, "ORGN_CLSF_CD")).
+                                    colg(getJSONValue(json, "COLG")).
+                                    degrNmSust(getJSONValue(json, "DEGR_NM_SUST")).
+                                    openSbjtNo(getJSONValue(json, "OPEN_SBJT_NO")).
+                                    openDclss(getJSONValue(json, "OPEN_DCLSS")).
+                                    openSbjtNm(getJSONValue(json, "OPEN_SBJT_NM")).
+                                    cptnDivNm(getJSONValue(json, "CPTN_DIV_NM")).
+                                    profInfo(getJSONValue(json, "PROF_INFO")).
+                                    tmtblInfo(getJSONValue(json, "TMTBL_INFO")).build();
                             default -> null;
                         };
                         entireSubjectService.save(entireSubject);
