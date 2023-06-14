@@ -29,7 +29,7 @@ public class KeywordSetService {
     public List<KeywordSet> getRankedList(int rank,int order){
         List<KeywordSet> list=keywordSetRepository.findAll();
 
-        if(order==1) // ASC
+        if(order==0) // ASC
             list.sort((k1,k2)->k2.number-k1.number);
         else // DESC
             list.sort((k1,k2)->k1.number-k2.number);

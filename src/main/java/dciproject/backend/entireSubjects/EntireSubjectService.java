@@ -32,7 +32,7 @@ public class EntireSubjectService {
         TypedQuery<EntireSubject> query;
 
         query=switch (year){
-            case 2020 -> entityManager.createQuery("SELECT e FROM EntireSubject_2020 e", EntireSubject.class);
+            case 2020 -> entityManager.createQuery("SELECT e FROM EntireSubject_2020 e WHERE e.OPEN_YR='2022'", EntireSubject.class);
             case 2021 -> entityManager.createQuery("SELECT e FROM EntireSubject_2021 e", EntireSubject.class);
             case 2022 -> entityManager.createQuery("SELECT e FROM EntireSubject_2022 e", EntireSubject.class);
             default -> null;

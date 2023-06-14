@@ -23,16 +23,12 @@ import java.util.List;
 @Slf4j
 public class SubjectStatisticsService {
     private final SubjectStatisticsRepository subjectStatisticsRepository;
-    private final ClassRegistrationService classRegistrationService;
-    private final EntireSubjectService entireSubjectService;
     private final EntityManager entityManager;
 
 
-    public SubjectStatisticsService(SubjectStatisticsRepository subjectStatisticsRepository, ClassRegistrationService classRegistrationService, EntityManager entityManager, EntireSubjectService entireSubjectService) {
+    public SubjectStatisticsService(SubjectStatisticsRepository subjectStatisticsRepository, EntityManager entityManager) {
         this.subjectStatisticsRepository = subjectStatisticsRepository;
-        this.classRegistrationService = classRegistrationService;
         this.entityManager = entityManager;
-        this.entireSubjectService = entireSubjectService;
     }
 
     public SubjectStatistics save(SubjectStatistics entity) {
@@ -313,15 +309,15 @@ public class SubjectStatisticsService {
     public List<SubjectStatistics> getRankedList(int rank, int order){
         List<SubjectStatistics> list=subjectStatisticsRepository.findAll();
 
-        if(order==1) // ASC
+        if(order==0) // ASC
             list.sort((s1,s2)-> {
                 if(s1.getComp_level()!=s2.getComp_level()) { // 경쟁률의 레벨을 비교
                     return s1.getComp_level()-s2.getComp_level();
                 }else{
                     if(s1.getComp_rate()>s2.getComp_rate()){ // 경쟁률의 수치를 비교
-                        return -1;
-                    }else if(s1.getComp_rate()<s2.getComp_rate()){
                         return 1;
+                    }else if(s1.getComp_rate()<s2.getComp_rate()){
+                        return -1;
                     }else{
                         return 0;
                     }
@@ -333,9 +329,9 @@ public class SubjectStatisticsService {
                     return s2.getComp_level()-s1.getComp_level();
                 }else{
                     if(s2.getComp_rate()>s1.getComp_rate()){
-                        return -1;
-                    }else if(s2.getComp_rate()<s1.getComp_rate()){
                         return 1;
+                    }else if(s2.getComp_rate()<s1.getComp_rate()){
+                        return -1;
                     }else{
                         return 0;
                     }
