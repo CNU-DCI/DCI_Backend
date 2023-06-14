@@ -5,7 +5,7 @@ import Add from "img/Add.png";
 
 const CompareSubjectDiv = styled.div`
   width: 80%;
-  height: 25vh;
+  height: 30%;
 `;
 
 const CompareTitle = styled.p`
@@ -18,7 +18,7 @@ const CompareTitle = styled.p`
 
 const CompareComponentDiv = styled.div`
   width: 100%;
-  height: 170px;
+  height: 80%;
   display: flex;
   align-items: center;
   overflow-x: scroll;

@@ -74,6 +74,7 @@ const ResultBody = styled.div`
   margin-bottom: 3px;
   display: flex;
   place-items: center;
+  cursor: pointer;
   :hover {
     background-color: #fffddd;
   }
@@ -131,16 +132,23 @@ const Cart = ({ outer, result, setResult }) => {
 
   const removeItem = (e) => {
     const idx = e.currentTarget.dataset.idx;
-    console.log(idx);
+    const removedList = result.filter(r => r.subjectID !== idx)
+    setResult(removedList)
   };
 
   const removeResults = () => {
     if (result.length !== 0) {
       setResult([]);
     } else {
-      window.alert("장가부니가 비어있습니다.");
+      window.alert("장바구니가 비어있습니다.");
     }
   };
+
+  const showDetail = (e) => {
+    const idx = e.currentTarget.dataset.key;
+    window.open(`/subject/${idx}`, "_blank");
+  };
+
 
   return (
     <ContentDiv>
@@ -165,32 +173,32 @@ const Cart = ({ outer, result, setResult }) => {
           )}
           <ResultTableBody className="resultTable">
             {result.map((subjects, idx) => (
-              <ResultBodyDiv key={idx}>
-                <ResultBody>
+              <ResultBodyDiv key={subjects.subjectID}>
+                <ResultBody onClick={showDetail}>
                   <ResultTableP style={{ width: "25%" }}>
-                    {subjects.subject}
+                    {subjects.openSbjtNm}
                   </ResultTableP>
                   <ResultTableP style={{ width: "5%" }}>
-                    {subjects.grade}
+                    {subjects.trgtShyr}
                   </ResultTableP>
                   <ResultTableP style={{ width: "20%" }}>
-                    {subjects.sbjnum}
+                    {subjects.openSbjtNo}
                   </ResultTableP>
                   <ResultTableP style={{ width: "25%" }}>
-                    {subjects.department}
+                    {subjects.degrNmSust}
                   </ResultTableP>
                   <ResultTableP style={{ width: "15%" }}>
-                    {subjects.classification}
+                    {subjects.cptnDivNm}
                   </ResultTableP>
                   <ResultTableP style={{ width: "10%" }}>
-                    {subjects.professor}
+                    {subjects.profInfo}
                   </ResultTableP>
                 </ResultBody>
                 <IconDiv>
                   <FaTrashAlt
                     size="24"
                     class="trash_icon"
-                    data-idx={idx}
+                    data-idx={subjects.subjectID}
                     onClick={removeItem}
                   />
                 </IconDiv>

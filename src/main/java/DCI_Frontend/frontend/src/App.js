@@ -19,10 +19,6 @@ function App() {
     getMajors().then(data => setMajor(data))
   }, []);
 
-  useEffect(() => {
-    console.log(major)
-  }, [major])
-
   return (
     <Background className="App">
       <BrowserRouter>

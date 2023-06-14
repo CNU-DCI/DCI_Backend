@@ -27,7 +27,7 @@ public class SubjectStatisticsController {
 
 
     @GetMapping("/api/statistics/rank")
-    private List<SubjectStatistics> readByRank(@RequestParam int rank, @RequestParam int sortingOrder){
+    private List<ResponseForSubjectPerClass> readByRank(@RequestParam int rank, @RequestParam int sortingOrder){
         return subjectStatisticsService.getRankedList(rank,sortingOrder);
     }
 

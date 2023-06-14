@@ -305,9 +305,28 @@ public class SubjectStatisticsService {
         return subjectStatisticsRepository.findById(subjectID).orElse(null);
     }
 
+public String getName(String subjectID){
 
-    public List<SubjectStatistics> getRankedList(int rank, int order){
-        List<SubjectStatistics> list=subjectStatisticsRepository.findAll();
+        int year=Integer.parseInt(subjectID.split("-")[0]);
+
+        return switch (year){
+            case 2020-> entityManager.find(EntireSubject_2020.class,subjectID).getOpenSbjtNm();
+            case 2021->entityManager.find(EntireSubject_2021.class,subjectID).getOpenSbjtNm();
+            case 2022->entityManager.find(EntireSubject_2022.class,subjectID).getOpenSbjtNm();
+            default -> null;
+        };
+    }
+
+    public List<ResponseForSubjectPerClass> getRankedList(int rank, int order){
+        List<ResponseForSubjectPerClass> list=
+                subjectStatisticsRepository.findAll().stream()
+                        .map(subject->ResponseForSubjectPerClass.builder().
+                                subjectID(subject.getSubjectID()).
+                                corrected_num(subject.getCorrectedNum()).
+                                comp_rate(subject.getComp_rate()).
+                                comp_level(subject.getComp_level()).
+                                openSbjtNm(getName(subject.getSubjectID())).build()).toList();
+
 
         if(order==0) // ASC
             list.sort((s1,s2)-> {
@@ -337,6 +356,8 @@ public class SubjectStatisticsService {
                     }
                 }
             });
+
+
 
         return list.subList(0, Math.min(list.size(), rank));
     }

@@ -1,6 +1,7 @@
 package dciproject.backend.function.Repository;
 
 public interface SubjectMapping {
+    String getsubjectID(); // ID 값
     String getOpenSbjtNm(); // 과목명
     String getTrgtShyr(); //학년
     String getOpenSbjtNo(); //과목번호

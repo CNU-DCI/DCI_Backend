@@ -72,6 +72,7 @@ const ResultBody = styled.div`
   margin-bottom: 3px;
   display: flex;
   place-items: center;
+  cursor: pointer;
   :hover {
     background-color: #fffddd;
   }
@@ -96,7 +97,10 @@ const SearchResult = ({ result, addCart }) => {
     addCart(idx);
   };
 
-  const showDetail = () => {};
+  const showDetail = (e) => {
+    const idx = e.currentTarget.dataset.key;
+    window.open(`/subject/${idx}`, "_blank");
+  };
 
   return (
     <ContentDiv>
@@ -121,30 +125,31 @@ const SearchResult = ({ result, addCart }) => {
           )}
           <ResultTableBody className="resultTable">
             {result.map((subjects, idx) => (
-              <ResultBodyDiv key={idx}>
+              <ResultBodyDiv key={subjects.subjectID}>
                 <ResultBody onClick={showDetail}>
                   <ResultTableP style={{ width: "25%" }}>
-                    {subjects.subject}
+                    {subjects.openSbjtNm}
                   </ResultTableP>
                   <ResultTableP style={{ width: "5%" }}>
-                    {subjects.grade}
+                    {subjects.trgtShyr}
                   </ResultTableP>
                   <ResultTableP style={{ width: "20%" }}>
-                    {subjects.sbjnum}
+                    {subjects.openSbjtNo}
                   </ResultTableP>
                   <ResultTableP style={{ width: "25%" }}>
-                    {subjects.department}
+                    {subjects.degrNmSust}
                   </ResultTableP>
                   <ResultTableP style={{ width: "15%" }}>
-                    {subjects.classification}
+                    {subjects.cptnDivNm}
                   </ResultTableP>
                   <ResultTableP style={{ width: "10%" }}>
-                    {subjects.professor}
+                    {subjects.profInfo
+}
                   </ResultTableP>
                 </ResultBody>
                 <IconDiv>
                   <FaShoppingBag
-                    data-idx={idx}
+                    data-idx={subjects.subjectID}
                     size="24"
                     class="shopping_icon"
                     onClick={PutIn}

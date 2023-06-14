@@ -22,7 +22,7 @@ public class KeywordSetController {
 //    }
 
 
-    @GetMapping("/keyword/rank") // rank 까지의 리스트를 출력 order==1 ASC, else DESC
+    @GetMapping("/api/keyword/rank") // rank 까지의 리스트를 출력 order==1 ASC, else DESC
     private List<KeywordSet> readByRank(@RequestParam int rank, @RequestParam int sortingOrder){
         return keywordSetService.getRankedList(rank, sortingOrder);
     }

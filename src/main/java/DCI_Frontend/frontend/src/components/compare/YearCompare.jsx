@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const YearCompareDiv = styled.div`
   width: 80%;
-  height: 60vh;
+  height: 55vh;
   border: 1px solid #888888;
 `;
 

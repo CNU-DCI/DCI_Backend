@@ -98,15 +98,13 @@ export const getAllClass = async (id, opener) => {
     }
 }
 
-export const search = async (year, shmt, cdn, colg, dn, keyword) => {
-    /*검색어 순위 목록*/
+export const search = async (params) => {
+    /*검색*/
     try {
         const res = await axios({
             method: "get",
             url: "/api/search",
-            params: {
-               year, shmt, cdn, colg, dn, keyword
-            }
+            params,
         });
         return res.data;
     } catch(e) {
