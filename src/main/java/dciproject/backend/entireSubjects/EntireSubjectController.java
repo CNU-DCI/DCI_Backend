@@ -1,6 +1,7 @@
 package dciproject.backend.entireSubjects;
 
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,7 @@ public class EntireSubjectController {
         this.entireSubjectService = entireSubjectService;
     }
 
-    @PostMapping("/subject/load-major")
+    @GetMapping("/subject/load-majors")
     private List<ResponseForMajor> loadAllMajor(){
         HashMap<String, List<String>> map = entireSubjectService.loadMajorAll();
         List<ResponseForMajor> result=new ArrayList<>();
