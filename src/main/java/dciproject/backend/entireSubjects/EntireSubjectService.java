@@ -27,15 +27,15 @@ public class EntireSubjectService {
         String[] info=id.split("-");
         EntireSubject subject= switch (year) {
             case 2022-> EntireSubject_2022.builder().
-                    subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
-                    TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
-                    OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
-                    CPTN_DIV_NM("일반선택").PNT("0").THEO_TMCNT("0").PRAC_TMCNT("0").build();
+                    subjectID(id).openYr(String.valueOf(year)).shtm(info[1] + "학기").
+                    trgtShyr("1").orgnClsfCd("학부").colg("대학").degrNmSust("학과공통").
+                    openSbjtNo(info[2] + "-" + info[3]).openDclss(info[4]).openSbjtNm(name).
+                    cptnDivNm("일반선택").pnt("0").theoTmcnt("0").pracTmcnt("0").build();
             case 2021-> EntireSubject_2021.builder().
-                    subjectID(id).OPEN_YR(String.valueOf(year)).SHTM(info[1] + "학기").
-                    TRGT_SHYR("1").ORGN_CLSF_CD("학부").COLG("대학").DEGR_NM_SUST("학과공통").
-                    OPEN_SBJT_NO(info[2] + "-" + info[3]).OPEN_DCLSS(info[4]).OPEN_SBJT_NM(name).
-                    CPTN_DIV_NM("일반선택").PNT("0").THEO_TMCNT("0").PRAC_TMCNT("0").build();
+                    subjectID(id).openYr(String.valueOf(year)).shtm(info[1] + "학기").
+                    trgtShyr("1").orgnClsfCd("학부").colg("대학").degrNmSust("학과공통").
+                    openSbjtNo(info[2] + "-" + info[3]).openDclss(info[4]).openSbjtNm(name).
+                    cptnDivNm("일반선택").pnt("0").theoTmcnt("0").pracTmcnt("0").build();
             case 2020-> EntireSubject_2020.builder().
                     subjectID(id).openYr(String.valueOf(year)).shtm(info[1] + "학기").
                     trgtShyr("1").orgnClsfCd("학부").colg("대학").degrNmSust("학과공통").

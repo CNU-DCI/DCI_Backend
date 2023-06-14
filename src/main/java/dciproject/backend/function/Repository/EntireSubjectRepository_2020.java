@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EntireSubject_2020Repository extends JpaRepository<EntireSubject_2020, String> {
-    //List<SbjResponseDTO> findAllByshtmAndcptnDivNmAnddegrNmSustAndopenSbjtNmContaining (String s, String c, String d, String k);
-
-    List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNm(String shtm, String cptnDivNm, String degrNmSust, String openSbjtNm);
+public interface EntireSubjectRepository_2020 extends JpaRepository<EntireSubject_2020, String> {
+    List<SubjectMapping> findAllByShtmAndCptnDivNmAndDegrNmSustAndOpenSbjtNmContaining(String shtm, String cptnDivNm, String degrNmSust, String openSbjtNm);
 
 }
