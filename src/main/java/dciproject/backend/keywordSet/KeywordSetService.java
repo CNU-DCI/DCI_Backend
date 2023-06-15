@@ -19,7 +19,7 @@ public class KeywordSetService {
     public void saveKeyword(String keyword){
         KeywordSet detachedData=keywordSetRepository.findById(keyword).orElse(null);
         if(detachedData!=null){
-            detachedData.setNumber(detachedData.getNumber()+1);
+            detachedData.setValue(detachedData.getValue()+1);
             keywordSetRepository.save(detachedData); // 영속성 컨텍스트 분리 후 저장
         }else{
             keywordSetRepository.save(new KeywordSet(keyword,1));
@@ -30,9 +30,9 @@ public class KeywordSetService {
         List<KeywordSet> list=keywordSetRepository.findAll();
 
         if(order==0) // ASC
-            list.sort((k1,k2)->k2.number-k1.number);
+            list.sort((k1,k2)->k2.value-k1.value);
         else // DESC
-            list.sort((k1,k2)->k1.number-k2.number);
+            list.sort((k1,k2)->k1.value-k2.value);
 
         return list.subList(0, Math.min(list.size(), rank));
     }

@@ -16,7 +16,8 @@ import lombok.*;
 @NoArgsConstructor
 public class KeywordSet {
     @Id
-    public String keyword;
-    @Column
-    public Integer number;
+    @Column(name="keyword")
+    public String text;
+    @Column(name="number")
+    public Integer value;
 }

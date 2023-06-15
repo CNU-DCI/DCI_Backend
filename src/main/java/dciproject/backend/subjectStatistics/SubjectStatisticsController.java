@@ -2,11 +2,9 @@ package dciproject.backend.subjectStatistics;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,15 @@ public class SubjectStatisticsController {
     @GetMapping("/api/statistics/rank")
     private List<ResponseForSubjectPerClass> readByRank(@RequestParam int rank, @RequestParam int sortingOrder){
         return subjectStatisticsService.getRankedList(rank,sortingOrder);
+    }
+
+    @PostMapping("/api/statistics/readAll")
+    private List<SubjectStatistics> readAll(@RequestBody List<String> list){
+        List<SubjectStatistics> result=new ArrayList<>();
+        for(String subjectID : list){
+            result.add(subjectStatisticsService.findBySubjectID(subjectID));
+        }
+        return result;
     }
 
     @GetMapping("/api/statistics/read") // 하나의 과목 통계정보(ID, 경쟁률, 정정인원) 가져오기
