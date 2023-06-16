@@ -6,20 +6,56 @@ import dciproject.backend.classRegistration.classRegistration_2021.ClassRegistra
 import dciproject.backend.classRegistration.classRegistration_2021.ClassRegistration_2021;
 import dciproject.backend.classRegistration.classRegistration_2022.ClassRegistrationPK_2022;
 import dciproject.backend.classRegistration.classRegistration_2022.ClassRegistration_2022;
+import dciproject.backend.entireSubjects.EntireSubject;
+import dciproject.backend.entireSubjects.entireSubject_2020.EntireSubject_2020;
 import dciproject.backend.keywordSet.KeywordSet;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 @Service
+@Slf4j
 public class ClassRegistrationService {
     private final EntityManager entityManager;
     public ClassRegistrationService(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+    @Transactional
+    public void databuild(int year, String type1_start, String type2_start) {
+        TypedQuery<EntireSubject> query = switch (year) {
+            case 2020 -> entityManager.createQuery("SELECT e FROM EntireSubject_2020 e", EntireSubject.class);
+            case 2021 -> entityManager.createQuery("SELECT e FROM EntireSubject_2021 e", EntireSubject.class);
+            case 2022 -> entityManager.createQuery("SELECT e FROM EntireSubject_2022 e", EntireSubject.class);
+            default -> null;
+        };
+
+        List<EntireSubject> subjects = query.getResultList();
+
+        for (EntireSubject subject : subjects) {
+            String id = subject.getSubjectID();
+            String[] args = id.split("-");
+
+            String startDate = (Integer.parseInt(args[1]) == 1) ? type1_start : type2_start;
+
+            ClassRegistration registration = switch (year) {
+                case 2020 -> ClassRegistration_2020.builder().
+                        registrationNumber(0).subjectID(id).TLSN_APLY_DT(startDate).build();
+                case 2021 -> ClassRegistration_2021.builder().
+                        registrationNumber(0).subjectID(id).TLSN_APLY_DT(startDate).build();
+                case 2022 -> ClassRegistration_2022.builder().
+                        registrationNumber(0).subjectID(id).TLSN_APLY_DT(startDate).build();
+                default -> null;
+            };
+
+            log.info("added : {}",registration);
+            save(registration);
+        }
+    }
+
 
     public List<ClassRegistration> findAllByYear(int year){
         TypedQuery<ClassRegistration> query;

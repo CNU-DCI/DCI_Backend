@@ -54,7 +54,6 @@ public class SubjectStatisticsController {
         List<SubjectStatistics> result=new ArrayList<>();
 
         while(classNum<25) {
-            log.info("SUBJECT: {}",nextSubjectID);
             if (subjectStatisticsService.isEqualOpener(nextSubjectID, opener)) {
                 result.add(subjectStatisticsService.findBySubjectID(nextSubjectID));
             }

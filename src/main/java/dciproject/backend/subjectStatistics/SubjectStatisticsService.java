@@ -54,15 +54,10 @@ public class SubjectStatisticsService {
             List<EntireSubject> entireSubjectList = subjectStrategy.getStrategy();
             List<ClassRegistration> classRegistrations = classStrategy.getStrategy();
 
-            log.info("STRATEGE subject: {}", entireSubjectList.size());
-            log.info("STRATEGE registration: {}", classRegistrations.size());
-
             for (EntireSubject subject : entireSubjectList) { // 모든 수강 과목에 대해서 진행
                 String subjectID = subject.getSubjectID(); // 현재 과목 ID
                 List<ClassRegistration> registrationListById = // 현재 과목 ID의 수강신청 정보
                         classRegistrations.stream().filter(registration -> registration.getSubjectID().equals(subjectID)).toList();
-
-                log.info("listsize: {}", registrationListById.size());
 
                 if (registrationListById.size() < 1) continue;
 
@@ -163,7 +158,7 @@ public class SubjectStatisticsService {
 
                 } else {
                     for (int SHYR = 1; SHYR < 6; SHYR++) {
-                        log.info("period: {}, {}, {}", year, SHTM, SHYR);
+
                         periodOfSHYR = Period.getPeriod(year, SHTM, SHYR);
 
                         if (periodOfSHYR == null) continue;
@@ -298,7 +293,7 @@ public class SubjectStatisticsService {
             case 2022 -> entityManager.find(EntireSubject_2022.class, subjectID);
             default -> null;
         };
-        log.info("isequal?: {}, {}",subjectID, entireSubject!=null ? entireSubject.getDegrNmSust() : "null");
+
         return entireSubject!=null && opener.equals(entireSubject.getDegrNmSust());
     }
     public SubjectStatistics findBySubjectID(String subjectID){
