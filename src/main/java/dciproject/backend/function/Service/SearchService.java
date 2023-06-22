@@ -46,10 +46,10 @@ public class SearchService {
         }
 
         List<SbjResponseDTO> result=source.stream().
-                        filter(subject-> dn == null || subject.getDegrNmSust().equals(dn)). // 학과명 일치
-                        filter(subject-> shmt == null || subject.getShtm().equals(shmt)). // 강의학기 일치
-                        filter(subject-> colg== null || subject.getColg().equals(colg)). // 단과대명 일치
-                        filter(subject-> cdn == null || subject.getCptnDivNm().equals(cdn)). // 이수구분 일치
+                        filter(subject-> dn.equals("null") || subject.getDegrNmSust().equals(dn)). // 학과명 일치
+                        filter(subject-> shmt.equals("null") || subject.getShtm().equals(shmt)). // 강의학기 일치
+                        filter(subject-> colg.equals("null") || subject.getColg().equals(colg)). // 단과대명 일치
+                        filter(subject-> cdn.equals("null") || subject.getCptnDivNm().equals(cdn)). // 이수구분 일치
                         map(subject->SbjResponseDTO.builder().
                                                     subjectID(subject.getSubjectID()).
                                                     trgtShyr(subject.getTrgtShyr()).
