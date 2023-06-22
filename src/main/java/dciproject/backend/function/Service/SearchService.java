@@ -34,14 +34,15 @@ public class SearchService {
 
         List<EntireSubject> source=new ArrayList<>();
 
-        switch (year) {
-            case "2020" -> source.addAll(subjectRepository_2020.findAllByOpenSbjtNmContaining(keyword));
-            case "2021" -> source.addAll(subjectRepository_2021.findAllByOpenSbjtNmContaining(keyword));
-            case "2022" -> source.addAll(subjectRepository_2022.findAllByOpenSbjtNmContaining(keyword));
-            default -> {
-                source.addAll(subjectRepository_2020.findAllByOpenSbjtNmContaining(keyword));
-                source.addAll(subjectRepository_2021.findAllByOpenSbjtNmContaining(keyword));
-                source.addAll(subjectRepository_2022.findAllByOpenSbjtNmContaining(keyword));
+        if(year==null){
+            source.addAll(subjectRepository_2020.findAllByOpenSbjtNmContaining(keyword));
+            source.addAll(subjectRepository_2021.findAllByOpenSbjtNmContaining(keyword));
+            source.addAll(subjectRepository_2022.findAllByOpenSbjtNmContaining(keyword));
+        }else {
+            switch (year) {
+                case "2020" -> source.addAll(subjectRepository_2020.findAllByOpenSbjtNmContaining(keyword));
+                case "2021" -> source.addAll(subjectRepository_2021.findAllByOpenSbjtNmContaining(keyword));
+                case "2022" -> source.addAll(subjectRepository_2022.findAllByOpenSbjtNmContaining(keyword));
             }
         }
 
