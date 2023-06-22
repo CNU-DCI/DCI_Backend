@@ -25,7 +25,7 @@ public class SearchService {
 
 
     public List<SbjResponseDTO> findAllByDTO(SbjRequestDTO sjRequestDTO){
-        int year = Integer.parseInt(sjRequestDTO.getYear()); // 년도
+        String year =sjRequestDTO.getYear(); // 년도
         String shmt = sjRequestDTO.getShmt(); // 학기
         String cdn = sjRequestDTO.getCdn(); // 이수구분
         String colg = sjRequestDTO.getColg(); // 단과대
@@ -35,9 +35,9 @@ public class SearchService {
         List<EntireSubject> source=new ArrayList<>();
 
         switch (year) {
-            case 2020 -> source.addAll(subjectRepository_2020.findAllByOpenSbjtNmContaining(keyword));
-            case 2021 -> source.addAll(subjectRepository_2021.findAllByOpenSbjtNmContaining(keyword));
-            case 2022 -> source.addAll(subjectRepository_2022.findAllByOpenSbjtNmContaining(keyword));
+            case "2020" -> source.addAll(subjectRepository_2020.findAllByOpenSbjtNmContaining(keyword));
+            case "2021" -> source.addAll(subjectRepository_2021.findAllByOpenSbjtNmContaining(keyword));
+            case "2022" -> source.addAll(subjectRepository_2022.findAllByOpenSbjtNmContaining(keyword));
             default -> {
                 source.addAll(subjectRepository_2020.findAllByOpenSbjtNmContaining(keyword));
                 source.addAll(subjectRepository_2021.findAllByOpenSbjtNmContaining(keyword));
