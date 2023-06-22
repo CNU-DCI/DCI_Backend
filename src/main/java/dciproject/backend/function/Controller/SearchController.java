@@ -1,6 +1,8 @@
 package dciproject.backend.function.Controller;
 
+import dciproject.backend.entireSubjects.EntireSubject;
 import dciproject.backend.function.DTO.SbjRequestDTO;
+import dciproject.backend.function.DTO.SbjResponseDTO;
 import dciproject.backend.function.Repository.SubjectMapping;
 import dciproject.backend.function.Service.SearchService;
 import dciproject.backend.keywordSet.KeywordSetService;
@@ -21,7 +23,7 @@ public class SearchController {
     private final KeywordSetService keywordSetService;
 
     @GetMapping("/api/search")
-    public List<SubjectMapping> requestSearchSubject(@ModelAttribute SbjRequestDTO sbjRequestDTO){
+    public List<SbjResponseDTO> requestSearchSubject(@ModelAttribute SbjRequestDTO sbjRequestDTO){
         log.info("SearchSubjectController::: Year={}, Shmt={}, Cdn={}, Colg={}, Dn={}, Keyword={}",
                 sbjRequestDTO.getYear(),
                 sbjRequestDTO.getShmt(),
@@ -31,10 +33,29 @@ public class SearchController {
                 sbjRequestDTO.getKeyword()
         );
 
-        List<SubjectMapping> sbjResponse = searchService.getSbjs(sbjRequestDTO);
+        List<SbjResponseDTO> result= searchService.findAllByDTO(sbjRequestDTO);
 
         keywordSetService.saveKeyword(sbjRequestDTO.getKeyword());
 
-        return sbjResponse;
+        return result;
     }
+
+
+//    @GetMapping("/api/search")
+//    public List<SubjectMapping> requestSearchSubject(@ModelAttribute SbjRequestDTO sbjRequestDTO){
+//        log.info("SearchSubjectController::: Year={}, Shmt={}, Cdn={}, Colg={}, Dn={}, Keyword={}",
+//                sbjRequestDTO.getYear(),
+//                sbjRequestDTO.getShmt(),
+//                sbjRequestDTO.getCdn(),
+//                sbjRequestDTO.getColg(),
+//                sbjRequestDTO.getDn(),
+//                sbjRequestDTO.getKeyword()
+//        );
+//
+//        List<SubjectMapping> sbjResponse = searchService.getSbjs(sbjRequestDTO);
+//
+//        keywordSetService.saveKeyword(sbjRequestDTO.getKeyword());
+//
+//        return sbjResponse;
+//    }
 }

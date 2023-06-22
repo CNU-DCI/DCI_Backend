@@ -8,10 +8,11 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class SbjResponseDTO {
-    public String sbjtNm; // 과목명
-    public String shry; // 학년
-    public String sbjtNo; // 과목번호
-    public String dn ; // 개설학과
-    public String divNm; // 이수구분
+    public String subjectID; // 과목 ID
+    public String trgtShyr; // 학년
+    public String openSbjtNm; // 과목명
+    public String openSbjtNo; // 과목번호
+    public String degrNmSust ; // 개설학과
+    public String cptnDivNm; // 이수구분
     public String profInfo ; // 담당교수
 }
