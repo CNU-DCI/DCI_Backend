@@ -36,7 +36,7 @@ public class ClassRegistrationController {
     }
 
 
-    @GetMapping("/registration/read") // 하나의 과목에 대한 수강신청 정보 가져오기(List)
+    @GetMapping("/api/registration/read") // 하나의 과목에 대한 수강신청 정보 가져오기(List)
     private List<ClassRegistration> read(@RequestParam String subjectID){
         return classRegistrationService.findBySubjectId(subjectID);
     }

@@ -1,7 +1,5 @@
 package dciproject.backend.subjectStatistics;
 
-import java.util.HashMap;
-
 public enum Period {
 
     //////////////////////////////////////2020-1///////////////////////////////////////
@@ -71,7 +69,7 @@ public enum Period {
     SHYR_ENTIRE_START_2022_01("20220209090000"),
     SHYR_ENTIRE_END_2022_01("20220211180000"),
 
-    //////////////////////////////////////2022-1///////////////////////////////////////
+    //////////////////////////////////////2022-2///////////////////////////////////////
     CORRECT_DATE_START_2022_02("20220901090000"),
     CORRECT_DATE_END_2022_02("20220907180000"),
     SHYR_1_DATE_START_2022_02("20220809150000"),
@@ -165,7 +163,7 @@ public enum Period {
         };
     }
 
-    private Period(String date){
+    Period(String date){
         this.date=date;
     }
 
